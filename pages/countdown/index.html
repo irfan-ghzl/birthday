@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 Kejutan Spesial Untukmu</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'dancing': ['Dancing Script', 'cursive'],
+                    },
+                    colors: {
+                        'rose-gold': '#b76e79',
+                        'soft-pink': '#fce4ec',
+                        'deep-purple': '#4a1942',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/countdown.css">
+</head>
+<body class="font-poppins overflow-x-hidden">
+    
+    <!-- Particles Background -->
+    <div id="particles-js" class="fixed inset-0 z-0"></div>
+    
+    <!-- ==================== SECTION 1: COUNTDOWN ==================== -->
+    <section id="countdown-section" class="min-h-screen flex items-center justify-center relative z-10">
+        <div class="text-center px-4">
+            <!-- Animated Hearts Background -->
+            <div class="hearts-container absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="floating-heart">💕</div>
+                <div class="floating-heart">💖</div>
+                <div class="floating-heart">💗</div>
+                <div class="floating-heart">💕</div>
+                <div class="floating-heart">💖</div>
+                <div class="floating-heart">💗</div>
+                <div class="floating-heart">💕</div>
+                <div class="floating-heart">💖</div>
+            </div>
+            
+            <!-- Main Title -->
+            <div class="mb-8" data-aos="fade-down">
+                <h1 class="font-dancing text-5xl md:text-7xl text-white mb-4 drop-shadow-lg">
+                    Kejutan Spesial
+                </h1>
+                <p class="text-white/80 text-lg md:text-xl">Sedang dalam perjalanan...</p>
+            </div>
+            
+            <!-- Heartbeat Animation -->
+            <div class="heartbeat-container mb-10" data-aos="zoom-in" data-aos-delay="200">
+                <div class="heart-pulse">
+                    <span class="text-8xl md:text-9xl">💝</span>
+                </div>
+            </div>
+            
+            <!-- Countdown Timer -->
+            <div class="countdown-wrapper mb-10" data-aos="fade-up" data-aos-delay="400">
+                <div class="flex justify-center gap-4 md:gap-8 flex-wrap">
+                    <div class="countdown-box">
+                        <div id="days" class="countdown-number">00</div>
+                        <div class="countdown-label">Hari</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div id="hours" class="countdown-number">00</div>
+                        <div class="countdown-label">Jam</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div id="minutes" class="countdown-number">00</div>
+                        <div class="countdown-label">Menit</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div id="seconds" class="countdown-number">00</div>
+                        <div class="countdown-label">Detik</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Message -->
+            <div class="message-box" data-aos="fade-up" data-aos-delay="600">
+                <p class="text-white text-xl md:text-2xl font-light italic">
+                    ✨ Tunggu kejutan spesial untukmu! ✨
+                </p>
+                <p class="text-white/60 mt-2 text-sm">Sesuatu yang indah sedang disiapkan dengan penuh cinta...</p>
+            </div>
+            
+            <!-- Skip Button -->
+            <button id="skip-countdown" class="mt-8 px-6 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition-all text-sm backdrop-blur-sm">
+                🎁 Lihat Sekarang
+            </button>
+        </div>
+    </section>
+    
+    <!-- ==================== WAIT MODAL (Sebelum countdown selesai) ==================== -->
+    <div id="wait-modal" class="modal-overlay hidden">
+        <div class="modal-container max-w-md">
+            <button class="modal-close" onclick="closeWaitModal()">✕</button>
+            <div class="modal-content text-center">
+                <!-- Lock Icon -->
+                <div class="text-6xl mb-4">🔒</div>
+                
+                <h3 class="font-dancing text-3xl text-white mb-2">Sabar ya sayang...</h3>
+                <p class="text-white/70 mb-6">Kejutan ini belum waktunya dibuka! 😊</p>
+                
+                <!-- Countdown reminder -->
+                <div class="bg-white/5 rounded-2xl p-4 mb-6">
+                    <p class="text-white/50 text-sm mb-2">Tunggu sampai:</p>
+                    <p class="text-white text-lg font-semibold" id="target-date-display">Loading...</p>
+                </div>
+                
+                <p class="text-pink-300 text-lg mb-6">
+                    ✨ Sesuatu yang spesial sedang disiapkan untukmu! ✨
+                </p>
+                
+                <!-- Button -->
+                <button 
+                    onclick="closeWaitModal()" 
+                    class="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600 transition-all"
+                >
+                    Oke, Aku Tunggu! 💖
+                </button>
+                
+                <!-- Cute message -->
+                <p class="text-white/40 text-xs mt-6">
+                    💕 Hal-hal indah butuh waktu... 💕
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ==================== PASSWORD MODAL (Setelah countdown selesai) ==================== -->
+    <div id="password-modal" class="modal-overlay hidden">
+        <div class="modal-container max-w-md">
+            <button class="modal-close" onclick="closePasswordModal()">✕</button>
+            <div class="modal-content text-center">
+                <!-- Lock Icon -->
+                <div class="text-6xl mb-4">🔐</div>
+                
+                <h3 class="font-dancing text-3xl text-white mb-2">Waktunya sudah tiba! 🎉</h3>
+                <p class="text-white/70 mb-6">Masukkan password untuk membuka hadiahmu...</p>
+                
+                <!-- Password Input -->
+                <div class="mb-4">
+                    <input 
+                        type="password" 
+                        id="password-input" 
+                        placeholder="Masukkan password rahasia..."
+                        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-pink-400 focus:ring-2 focus:ring-pink-400/30 transition-all"
+                        onkeypress="if(event.key === 'Enter') verifyPassword()"
+                    >
+                </div>
+                
+                <!-- Error Message -->
+                <p id="password-error" class="text-red-400 text-sm mb-4 hidden">
+                    ❌ Password salah! Coba lagi ya...
+                </p>
+                
+                <!-- Button -->
+                <button 
+                    onclick="verifyPassword()" 
+                    class="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600 transition-all"
+                >
+                    Buka Hadiah! 💖
+                </button>
+                
+                <!-- Hint -->
+                <p class="text-white/40 text-xs mt-6">
+                    💡 Hint: Kata yang sering aku ucapkan padamu...
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/particles-config.js"></script>
+    <script src="../../assets/js/countdown.js"></script>
+</body>
+</html>

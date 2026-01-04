@@ -1,0 +1,119 @@
+/* ==================== FLOATING HEARTS ==================== */
+.hearts-container {
+    z-index: 0;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatHeart 8s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.floating-heart:nth-child(1) { left: 5%; animation-delay: 0s; font-size: 1.5rem; }
+.floating-heart:nth-child(2) { left: 15%; animation-delay: 1s; font-size: 2rem; }
+.floating-heart:nth-child(3) { left: 25%; animation-delay: 2s; font-size: 1.8rem; }
+.floating-heart:nth-child(4) { left: 45%; animation-delay: 3s; font-size: 1.2rem; }
+.floating-heart:nth-child(5) { left: 65%; animation-delay: 4s; font-size: 2.2rem; }
+.floating-heart:nth-child(6) { left: 75%; animation-delay: 5s; font-size: 1.6rem; }
+.floating-heart:nth-child(7) { left: 85%; animation-delay: 6s; font-size: 1.4rem; }
+.floating-heart:nth-child(8) { left: 95%; animation-delay: 7s; font-size: 1.8rem; }
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(720deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* ==================== HEARTBEAT ANIMATION ==================== */
+.heartbeat-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heart-pulse {
+    animation: heartbeat 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.5));
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.15); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.15); }
+    70% { transform: scale(1); }
+}
+
+/* ==================== COUNTDOWN BOXES ==================== */
+.countdown-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    min-width: 100px;
+    transition: all 0.3s ease;
+}
+
+.countdown-box:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2);
+}
+
+.countdown-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+    line-height: 1;
+    transition: transform 0.1s ease;
+}
+
+.countdown-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0.5rem;
+}
+
+/* ==================== RESPONSIVE STYLES ==================== */
+@media (max-width: 768px) {
+    .countdown-number {
+        font-size: 2rem;
+    }
+    
+    .countdown-box {
+        padding: 1rem 1.5rem;
+        min-width: 70px;
+    }
+    
+    .countdown-label {
+        font-size: 0.7rem;
+    }
+}
+
+/* ==================== PASSWORD MODAL ==================== */
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 Hadiah Spesial Untukmu</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'dancing': ['Dancing Script', 'cursive'],
+                    },
+                    colors: {
+                        'rose-gold': '#b76e79',
+                        'soft-pink': '#fce4ec',
+                        'deep-purple': '#4a1942',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/gifts.css">
+</head>
+<body class="font-poppins overflow-x-hidden">
+    
+    <!-- Particles Background -->
+    <div id="particles-js" class="fixed inset-0 z-0"></div>
+    
+    <!-- ==================== SECTION 3: VIRTUAL GIFT BOXES ==================== -->
+    <section id="gifts-section" class="min-h-screen py-20 relative z-10">
+        <div class="container mx-auto px-4">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h2 class="font-dancing text-5xl md:text-6xl text-white mb-4" data-aos="fade-down">
+                    Hadiah Spesial Untukmu
+                </h2>
+                <p class="text-white/70 text-lg" data-aos="fade-up">Klik setiap kotak untuk membuka kejutannya! 🎀</p>
+            </div>
+            
+            <!-- Gift Boxes Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Gift Box 1: Foto Kenangan -->
+                <div class="gift-box" data-aos="zoom-in" data-aos-delay="100" onclick="openGiftModal('memories')">
+                    <div class="gift-box-inner">
+                        <div class="gift-box-lid">
+                            <div class="ribbon"></div>
+                        </div>
+                        <div class="gift-box-body">
+                            <span class="gift-emoji">📸</span>
+                            <h3 class="gift-title">Foto Kenangan</h3>
+                            <p class="gift-desc">Momen-momen indah kita</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gift Box 2: Surat Cinta -->
+                <div class="gift-box" data-aos="zoom-in" data-aos-delay="200" onclick="openGiftModal('letter')">
+                    <div class="gift-box-inner">
+                        <div class="gift-box-lid">
+                            <div class="ribbon"></div>
+                        </div>
+                        <div class="gift-box-body">
+                            <span class="gift-emoji">💌</span>
+                            <h3 class="gift-title">Surat Cinta</h3>
+                            <p class="gift-desc">Kata-kata dari hatiku</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gift Box 3: Voice Message -->
+                <div class="gift-box" data-aos="zoom-in" data-aos-delay="300" onclick="openGiftModal('voice')">
+                    <div class="gift-box-inner">
+                        <div class="gift-box-lid">
+                            <div class="ribbon"></div>
+                        </div>
+                        <div class="gift-box-body">
+                            <span class="gift-emoji">🎵</span>
+                            <h3 class="gift-title">Pesan Suara</h3>
+                            <p class="gift-desc">Dengarkan suara hatiku</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gift Box 4: Alasan I Love You -->
+                <div class="gift-box" data-aos="zoom-in" data-aos-delay="400" onclick="openGiftModal('reasons')">
+                    <div class="gift-box-inner">
+                        <div class="gift-box-lid">
+                            <div class="ribbon"></div>
+                        </div>
+                        <div class="gift-box-body">
+                            <span class="gift-emoji">💝</span>
+                            <h3 class="gift-title">Alasan Aku Cinta Kamu</h3>
+                            <p class="gift-desc">Semua hal yang kusuka darimu</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gift Box 5: Hadiah Kejutan -->
+                <div class="gift-box special-gift" data-aos="zoom-in" data-aos-delay="500" onclick="openGiftModal('surprise')">
+                    <div class="gift-box-inner">
+                        <div class="gift-box-lid">
+                            <div class="ribbon rainbow-ribbon"></div>
+                        </div>
+                        <div class="gift-box-body">
+                            <span class="gift-emoji">🌟</span>
+                            <h3 class="gift-title">Hadiah Kejutan</h3>
+                            <p class="gift-desc">Yang paling spesial untukmu</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Back Button -->
+            <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="600">
+                <a href="../celebration/index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-all backdrop-blur-sm">
+                    <span>←</span>
+                    <span>Kembali</span>
+                </a>
+            </div>
+            
+            <!-- Final Message -->
+            <div class="text-center mt-8" data-aos="fade-up" data-aos-delay="700">
+                <p class="text-white/80 text-lg font-light">
+                    Dibuat dengan sepenuh 💖 untukmu
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ==================== MODALS ==================== -->
+    
+    <!-- Modal Template -->
+    <div id="gift-modal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeGiftModal()">✕</button>
+            <div id="modal-content" class="modal-content">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/particles-config.js"></script>
+    <script src="../../assets/js/gifts.js"></script>
+</body>
+</html>

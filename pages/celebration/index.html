@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Happy Birthday! 🎉</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'dancing': ['Dancing Script', 'cursive'],
+                    },
+                    colors: {
+                        'rose-gold': '#b76e79',
+                        'soft-pink': '#fce4ec',
+                        'deep-purple': '#4a1942',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/celebration.css">
+</head>
+<body class="font-poppins overflow-x-hidden">
+    
+    <!-- Particles Background -->
+    <div id="particles-js" class="fixed inset-0 z-0"></div>
+    
+    <!-- ==================== SECTION 2: BIRTHDAY CELEBRATION ==================== -->
+    <section id="celebration-section" class="min-h-screen flex items-center justify-center relative z-10">
+        <div class="text-center px-4">
+            <!-- Balloon Animation Container -->
+            <div id="balloons-container" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+            
+            <!-- Birthday Message -->
+            <div class="celebration-content">
+                <div class="mb-6" data-aos="zoom-in">
+                    <span class="text-6xl md:text-8xl animate-bounce inline-block">🎂</span>
+                </div>
+                
+                <h1 class="font-dancing text-6xl md:text-8xl text-white mb-6 celebration-title" data-aos="fade-up">
+                    Happy Birthday!
+                </h1>
+                
+                <div class="text-4xl md:text-6xl mb-8 space-x-2" data-aos="fade-up" data-aos-delay="200">
+                    <span class="inline-block animate-bounce" style="animation-delay: 0s;">🎉</span>
+                    <span class="inline-block animate-bounce" style="animation-delay: 0.1s;">🎊</span>
+                    <span class="inline-block animate-bounce" style="animation-delay: 0.2s;">🎈</span>
+                    <span class="inline-block animate-bounce" style="animation-delay: 0.3s;">🎁</span>
+                    <span class="inline-block animate-bounce" style="animation-delay: 0.4s;">🥳</span>
+                </div>
+                
+                <p class="text-white/90 text-xl md:text-2xl mb-4 font-light" data-aos="fade-up" data-aos-delay="400">
+                    Selamat hari lahir, orang yang paling spesial! 💖
+                </p>
+                
+                <p class="text-white/70 text-lg mb-10 max-w-md mx-auto" data-aos="fade-up" data-aos-delay="500">
+                    Semoga di hari yang istimewa ini, semua harapan dan impianmu menjadi kenyataan
+                </p>
+                
+                <!-- Open Gift Button -->
+                <a href="../gifts/index.html" id="open-gifts-btn" class="gift-button group inline-flex" data-aos="zoom-in" data-aos-delay="600">
+                    <span class="gift-icon">🎁</span>
+                    <span class="gift-text">Buka Hadiah Kamu</span>
+                    <span class="gift-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Audio for Birthday Music (optional) -->
+    <audio id="birthday-music" loop>
+        <source src="../../assets/audio/birthday-music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/particles-config.js"></script>
+    <script src="../../assets/js/celebration.js"></script>
+</body>
+</html>

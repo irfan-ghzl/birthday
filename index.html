@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=pages/countdown/index.html">
+    <title>🎁 Kejutan Spesial Untukmu</title>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            margin: 0;
+        }
+        .loading {
+            text-align: center;
+        }
+        .loading-text {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .heart {
+            font-size: 3rem;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        a { color: #ff6b95; }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <div class="heart">💝</div>
+        <p class="loading-text">Memuat kejutan...</p>
+        <p>Jika tidak redirect otomatis, <a href="pages/countdown/index.html">klik di sini</a></p>
+    </div>
+</body>
+</html>
