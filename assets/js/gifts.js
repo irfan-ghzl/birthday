@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
         offset: 100
     });
     
+    // Set birthday person name
+    const personEl = document.getElementById('birthday-person');
+    if (personEl) personEl.textContent = BIRTHDAY_PERSON;
+    
     // Small confetti burst on page load
     if (typeof confetti !== 'undefined') {
         setTimeout(() => {
@@ -44,6 +48,15 @@ function openGiftModal(giftType) {
     modal.classList.remove('hidden');
     setTimeout(() => {
         modal.classList.add('show');
+        
+        // Add click event to all photos for lightbox
+        const photoItems = document.querySelectorAll('.photo-item img');
+        photoItems.forEach(img => {
+            img.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openPhotoLightbox(this.src, this.alt);
+            });
+        });
     }, 10);
 }
 
@@ -54,6 +67,52 @@ function closeGiftModal() {
     setTimeout(() => {
         modal.classList.add('hidden');
     }, 300);
+}
+
+// Photo Lightbox Functions
+function openPhotoLightbox(imageSrc, imageAlt) {
+    // Create lightbox if it doesn't exist
+    let lightbox = document.getElementById('photo-lightbox');
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.id = 'photo-lightbox';
+        lightbox.className = 'photo-lightbox hidden';
+        lightbox.innerHTML = `
+            <div class="lightbox-content">
+                <button class="lightbox-close" onclick="closePhotoLightbox()">&times;</button>
+                <img id="lightbox-image" src="" alt="" class="lightbox-image">
+                <p id="lightbox-caption" class="lightbox-caption"></p>
+            </div>
+        `;
+        document.body.appendChild(lightbox);
+        
+        // Close on background click
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                closePhotoLightbox();
+            }
+        });
+    }
+    
+    // Set image and caption
+    document.getElementById('lightbox-image').src = imageSrc;
+    document.getElementById('lightbox-caption').textContent = imageAlt;
+    
+    // Show lightbox
+    lightbox.classList.remove('hidden');
+    setTimeout(() => {
+        lightbox.classList.add('show');
+    }, 10);
+}
+
+function closePhotoLightbox() {
+    const lightbox = document.getElementById('photo-lightbox');
+    if (lightbox) {
+        lightbox.classList.remove('show');
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+        }, 300);
+    }
 }
 
 // Close modal when clicking outside
@@ -67,7 +126,13 @@ document.addEventListener('click', function(e) {
 // Close modal with Escape key
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        closeGiftModal();
+        // Close lightbox first if open
+        const lightbox = document.getElementById('photo-lightbox');
+        if (lightbox && !lightbox.classList.contains('hidden')) {
+            closePhotoLightbox();
+        } else {
+            closeGiftModal();
+        }
     }
 });
 
@@ -80,22 +145,41 @@ function getGiftContent(type) {
                 <h3 class="modal-title">Foto Kenangan Kita</h3>
                 <p class="modal-subtitle">Momen-momen indah yang tak terlupakan</p>
             </div>
-            <div class="photo-gallery">
-                <div class="photo-item">
-                    <span>📷</span>
+            <div class="photo-collage">
+                <div class="collage-item large" onclick="openPhotoLightbox('../../assets/images/lesung.jpeg', '')">
+                    <img src="../../assets/images/lesung.jpeg" alt="Kenangan 1">
                 </div>
-                <div class="photo-item">
-                    <span>🖼️</span>
+                <div class="collage-item" onclick="openPhotoLightbox('../../assets/images/Kami 6.jpg', '')">
+                    <img src="../../assets/images/Kami 6.jpg" alt="Kenangan 2">
                 </div>
-                <div class="photo-item">
-                    <span>📸</span>
+                <div class="collage-item" onclick="openPhotoLightbox('../../assets/images/Kami 5.jpg', '')">
+                    <img src="../../assets/images/Kami 5.jpg" alt="Kenangan 3">
                 </div>
-                <div class="photo-item">
-                    <span>🌅</span>
+                <div class="collage-item tall" onclick="openPhotoLightbox('../../assets/images/lesung 4.jpeg', '')">
+                    <img src="../../assets/images/lesung 4.jpeg" alt="Kenangan 4">
+                </div>
+                <div class="collage-item" onclick="openPhotoLightbox('../../assets/images/Kami.jpeg', '')">
+                    <img src="../../assets/images/Kami.jpeg" alt="Kenangan 5">
+                </div>
+                <div class="collage-item wide" onclick="openPhotoLightbox('../../assets/images/Kami 2.jpeg', '')">
+                    <img src="../../assets/images/Kami 2.jpeg" alt="Kenangan 6" style="object-position: center 1%;">
+                </div>
+                <div class="collage-item" onclick="openPhotoLightbox('../../assets/images/Kami 3.jpeg', '')">
+                    <img src="../../assets/images/Kami 3.jpeg" alt="Kenangan 7">
+                </div>
+                <div class="collage-item" onclick="openPhotoLightbox('../../assets/images/Kami 4.jpg', '')">
+                    <img src="../../assets/images/Kami 4.jpg" alt="Kenangan 8" style="object-position: center 100%;">
+                </div>
+                <div class="collage-item coming-soon">
+                    <div class="coming-soon-content">
+                        <span class="text-4xl mb-2">📷</span>
+                        <p class="text-white text-sm font-medium">Coming Soon</p>
+                        <p class="text-white/50 text-xs">Kenangan berikutnya...</p>
+                    </div>
                 </div>
             </div>
             <p class="text-center text-white/60 mt-4 text-sm">
-                💡 Tip: Ganti dengan foto-foto kenanganmu!
+                💡 Klik foto untuk melihat lebih besar
             </p>
         `,
         
@@ -123,26 +207,21 @@ function getGiftContent(type) {
         
         voice: `
             <div class="modal-header">
-                <span class="text-5xl mb-4 block">🎵</span>
-                <h3 class="modal-title">Pesan Suara</h3>
-                <p class="modal-subtitle">Dengarkan isi hatiku</p>
+                <span class="text-5xl mb-4 block">�</span>
+                <h3 class="modal-title">Video Spesial</h3>
+                <p class="modal-subtitle">Pesan video untukmu</p>
             </div>
-            <div class="audio-player">
-                <span class="audio-icon">🎙️</span>
-                <p class="audio-message">
-                    Aku merekam pesan spesial untukmu...<br>
-                    <span class="text-sm text-white/50">Klik tombol di bawah untuk mendengarkan</span>
-                </p>
-                <button class="play-button" onclick="playVoiceMessage()">
-                    <span>▶️</span> Putar Pesan
-                </button>
-                <div class="mt-6 p-4 bg-white/5 rounded-xl">
-                    <p class="text-white/70 text-sm">
-                        💡 Untuk menambahkan pesan suara:<br>
-                        1. Rekam pesanmu<br>
-                        2. Simpan sebagai file audio<br>
-                        3. Tambahkan ke folder assets/audio
-                    </p>
+            <div class="video-player">
+                <div class="video-container rounded-xl overflow-hidden mb-4">
+                    <video 
+                        id="gift-video"
+                        class="w-full rounded-xl"
+                        controls
+                        poster="../../assets/images/video-poster.jpg"
+                    >
+                        <source src="../../assets/videos/video.mp4" type="video/mp4">
+                        Browser tidak mendukung video.
+                    </video>
                 </div>
             </div>
         `,
@@ -179,10 +258,6 @@ function getGiftContent(type) {
                     <span class="reason-text">Cara kamu membuatku menjadi versi terbaik dari diriku 💪</span>
                 </div>
                 <div class="reason-item">
-                    <span class="reason-number">7</span>
-                    <span class="reason-text">Semua hal kecil yang kamu lakukan untukku 🥰</span>
-                </div>
-                <div class="reason-item">
                     <span class="reason-number">∞</span>
                     <span class="reason-text">Dan masih banyak lagi alasan yang tak bisa disebutkan satu per satu... 💕</span>
                 </div>
@@ -198,21 +273,45 @@ function getGiftContent(type) {
             <div class="surprise-content">
                 <div class="surprise-box">
                     <span class="surprise-emoji">🎁✨</span>
-                    <p class="surprise-text">SELAMAT!</p>
-                    <p class="surprise-desc">Kamu telah mendapatkan:</p>
+                    <p class="surprise-text">TEBAK HADIAHMU!</p>
+                    <p class="surprise-desc">Pecahkan 3 clue misterius ini:</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl p-6 mb-4">
+                    <p class="text-3xl mb-3">🔍</p>
+                    <h4 class="text-white text-xl font-semibold mb-3">Clue #1: Pendamping Petualangan</h4>
+                    <p class="text-white/70 text-sm italic mb-2">
+                        "Aku melangkah bersamamu ke manapun kaki membawa,<br>
+                        Menapaki setiap jalan yang kita lalui bersama,<br>
+                        Terkadang kotor, terkadang basah,<br>
+                        Namun selalu setia di bawah untuk melindungimu."
+                    </p>
+                    <p class="text-white/50 text-xs">💡 Hint: Sesuatu yang selalu di bawahmu</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl p-6 mb-4">
+                    <p class="text-3xl mb-3">🔍</p>
+                    <h4 class="text-white text-xl font-semibold mb-3">Clue #2: Pelukan Tanpa Lengan</h4>
+                    <p class="text-white/70 text-sm italic mb-2">
+                        "Saat angin bertiup dan udara dingin menyapa,<br>
+                        Aku memelukmu erat tanpa menggunakan tangan,<br>
+                        Dengan saku untuk menyimpan tanganmu yang dingin,<br>
+                        Dan resleting untuk menjagamu tetap hangat."
+                    </p>
+                    <p class="text-white/50 text-xs">💡 Hint: Kehangatan yang bisa kamu kenakan</p>
                 </div>
                 <div class="bg-white/5 rounded-2xl p-6 mb-6">
-                    <p class="text-3xl mb-4">🎫</p>
-                    <h4 class="text-white text-xl font-semibold mb-2">Voucher Kencan Spesial</h4>
-                    <p class="text-white/70">
-                        Satu hari penuh bersamaku,<br>
-                        ke tempat favoritmu,<br>
-                        dengan semua keinginanmu terpenuhi! 💑
+                    <p class="text-3xl mb-3">🔍</p>
+                    <h4 class="text-white text-xl font-semibold mb-3">Clue #3: Penangkap Waktu</h4>
+                    <p class="text-white/70 text-sm italic mb-2">
+                        "Aku tak bisa memeluk, tapi bisa menangkap momen,<br>
+                        Dengan satu klik, waktu berhenti selamanya,<br>
+                        Memori indah tersimpan dalam bingkai cahaya,<br>
+                        Kenangan yang takkan pernah pudar."
                     </p>
+                    <p class="text-white/50 text-xs">💡 Hint: Mengabadikan tanpa menyentuh</p>
                 </div>
                 <div class="bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-2xl p-6 border border-pink-500/30">
                     <p class="text-2xl mb-2">💎</p>
-                    <p class="text-white font-medium">BONUS:</p>
+                    <p class="text-white font-medium">BONUS MISTERI:</p>
                     <p class="text-white/80 text-lg">
                         Pelukan hangat tanpa batas<br>
                         + Ciuman manis<br>
