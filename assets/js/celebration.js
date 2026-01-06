@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
         offset: 100
     });
     
+    // Set birthday person name
+    const personEl = document.getElementById('birthday-person');
+    if (personEl) personEl.textContent = BIRTHDAY_PERSON;
+    
     // Start celebration effects
     startCelebration();
 });

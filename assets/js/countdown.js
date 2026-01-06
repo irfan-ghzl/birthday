@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
         offset: 100
     });
     
+    // Set birthday person name
+    const personEl = document.getElementById('birthday-person');
+    if (personEl) personEl.textContent = BIRTHDAY_PERSON;
+    
     // Start Countdown
     startCountdown();
     
@@ -216,7 +220,7 @@ function transitionToCelebration() {
         duration: 0.5,
         onComplete: () => {
             // Navigate to celebration page
-            window.location.href = '../celebration/index.html';
+            window.location.href = '../celebration/celebration.html';
         }
     });
 }
