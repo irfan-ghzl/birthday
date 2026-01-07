@@ -191,23 +191,23 @@ function getGiftContent(type) {
             </div>
             <div class="love-letter">
                 <div class="letter-content">
-                    <p>Sayangku yang tercinta,</p>
+                    <p>Agiel sayangku yang tercinta,</p>
                     <p>Di hari yang spesial ini, aku ingin kamu tahu betapa berharganya kehadiranmu dalam hidupku. Setiap hari bersamamu adalah hadiah yang tak ternilai.</p>
-                    <p>Kamu adalah alasan di balik senyumku setiap pagi, kekuatanku saat aku lemah, dan kebahagiaan yang selalu kunantikan.</p>
-                    <p>Terima kasih sudah menjadi bagian terindah dalam hidupku. Aku bersyukur bisa berbagi tawa, air mata, dan semua momen berharga denganmu.</p>
+                    <p>Agiel, kamu adalah alasan di balik senyumku setiap pagi, kekuatanku saat aku lemah, dan kebahagiaan yang selalu kunantikan.</p>
+                    <p>Terima kasih sudah menjadi bagian terindah dalam hidupku. Aku bersyukur bisa berbagi tawa, air mata, dan semua momen berharga denganmu, Agiel.</p>
                     <p>Semoga di hari ulang tahunmu ini, semua harapan dan impianmu menjadi kenyataan. Aku akan selalu ada di sampingmu, mendukungmu dalam setiap langkah.</p>
-                    <p>Selamat ulang tahun, cintaku! 💕</p>
+                    <p>Selamat ulang tahun, Agiel cintaku! 💕</p>
                 </div>
                 <div class="letter-signature">
                     Dengan segenap cinta,<br>
-                    ❤️ Yang Mencintaimu ❤️
+                    ❤️ Ipan 🦖 ❤️
                 </div>
             </div>
         `,
         
         voice: `
             <div class="modal-header">
-                <span class="text-5xl mb-4 block">�</span>
+                <span class="text-5xl mb-4 block">🎥</span>
                 <h3 class="modal-title">Video Spesial</h3>
                 <p class="modal-subtitle">Pesan video untukmu</p>
             </div>
@@ -219,9 +219,50 @@ function getGiftContent(type) {
                         controls
                         poster="../../assets/images/video-poster.jpg"
                     >
-                        <source src="../../assets/videos/video.mp4" type="video/mp4">
+                        <source src="../../assets/videos/video-final.mp4" type="video/mp4">
                         Browser tidak mendukung video.
                     </video>
+                </div>
+                
+                <!-- Secret Video -->
+                <div class="secret-video-wrapper" id="secret-video-wrapper">
+                    <div class="secret-video-locked" id="secret-locked">
+                        <div class="secret-icon">🔒</div>
+                        <h4 class="secret-title">Video Rahasia</h4>
+                        <p class="secret-description">Video spesial untukmu yang hanya bisa dibuka dengan password...</p>
+                        <div class="secret-unlock-section">
+                            <input 
+                                type="password" 
+                                id="secret-password" 
+                                class="secret-input" 
+                                placeholder="Masukkan password..."
+                                onkeypress="if(event.key==='Enter') unlockSecretVideo()"
+                            >
+                            <button class="secret-unlock-btn" onclick="unlockSecretVideo()">
+                                <span>🔓</span> Buka Video
+                            </button>
+                        </div>
+                        <p class="secret-hint">💡 Hint: Kata yang selalu kuucapkan padamu...</p>
+                    </div>
+                    
+                    <div class="secret-video-unlocked hidden" id="secret-unlocked">
+                        <div class="unlocked-header">
+                            <span class="unlocked-icon">✨</span>
+                            <h4 class="unlocked-title">Video Rahasia Terbuka!</h4>
+                            <p class="unlocked-subtitle">Ini khusus untukmu 💕</p>
+                        </div>
+                        <div class="video-container rounded-xl overflow-hidden">
+                            <video 
+                                id="secret-video"
+                                class="w-full rounded-xl"
+                                controls
+                                poster="../../assets/images/secret-poster.jpg"
+                            >
+                                <source src="../../assets/videos/video-project-compressed.mp4" type="video/mp4">
+                                Browser tidak mendukung video.
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </div>
         `,
@@ -337,4 +378,47 @@ function playVoiceMessage() {
     // Jika ada file audio:
     // const audio = new Audio('../../assets/audio/voice-message.mp3');
     // audio.play();
+}
+
+// ==================== SECRET VIDEO FUNCTIONS ====================
+const SECRET_VIDEO_PASSWORD = "sayang"; // Ganti dengan password yang kamu inginkan
+
+function unlockSecretVideo() {
+    const input = document.getElementById('secret-password');
+    const password = input.value.toLowerCase().trim();
+    
+    if (password === SECRET_VIDEO_PASSWORD) {
+        // Password benar - buka video
+        const locked = document.getElementById('secret-locked');
+        const unlocked = document.getElementById('secret-unlocked');
+        
+        // Animasi unlock
+        locked.style.animation = 'fadeOutScale 0.5s ease';
+        
+        setTimeout(() => {
+            locked.classList.add('hidden');
+            unlocked.classList.remove('hidden');
+            unlocked.style.animation = 'fadeInScale 0.5s ease';
+            
+            // Confetti celebration
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff6b95', '#ffc107', '#8b5cf6', '#ff8a80']
+                });
+            }
+        }, 500);
+    } else {
+        // Password salah - shake animation
+        input.style.animation = 'shake 0.5s ease';
+        input.value = '';
+        input.placeholder = '❌ Password salah! Coba lagi...';
+        
+        setTimeout(() => {
+            input.style.animation = '';
+            input.placeholder = 'Masukkan password...';
+        }, 500);
+    }
 }
