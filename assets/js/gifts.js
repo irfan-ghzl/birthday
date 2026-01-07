@@ -258,7 +258,7 @@ function getGiftContent(type) {
                                 controls
                                 poster="../../assets/images/secret-poster.jpg"
                             >
-                                <source src="../../assets/videos/Video-project-compressed.mp4" type="video/mp4">
+                                <source src="../../assets/videos/Video-Project-compressed.mp4" type="video/mp4">
                                 Browser tidak mendukung video.
                             </video>
                         </div>
